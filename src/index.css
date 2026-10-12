@@ -5,25 +5,25 @@
    ========================================================================== */
 
 :root {
-  /* Cores Institucionais TJCE / PJe */
-  --pje-navy: #093c75;
-  --pje-navy-dark: #052347;
-  --pje-blue: #0078aa;
-  --pje-blue-hover: #006088;
-  --pje-blue-light: #e0f2fe;
-  --pje-cyan: #0284c7;
-  --pje-accent: #00a8cc;
+  /* Cores Institucionais TJCE / PJe (Verde Oficial TJCE) */
+  --pje-navy: #0c4a2a;
+  --pje-navy-dark: #062b17;
+  --pje-blue: #007A3D;
+  --pje-blue-hover: #006331;
+  --pje-blue-light: #e8f5e9;
+  --pje-cyan: #059669;
+  --pje-accent: #10b981;
 
   /* Superfícies e Fundos (Light Mode) */
-  --bg-main: #f1f5f9;
-  --bg-sidebar: #062347;
-  --bg-sidebar-hover: #0b3469;
+  --bg-main: #f4f7f5;
+  --bg-sidebar: #08331d;
+  --bg-sidebar-hover: #0e4a2b;
   --bg-card: #ffffff;
-  --bg-card-subtle: #f8fafc;
-  --bg-hover: #f1f5f9;
-  --bg-active: #e2e8f0;
-  --border-color: #cbd5e1;
-  --border-subtle: #e2e8f0;
+  --bg-card-subtle: #f8faf9;
+  --bg-hover: #edf5f0;
+  --bg-active: #e2ede6;
+  --border-color: #cbd5cf;
+  --border-subtle: #e2e8e5;
 
   /* Tipografia & Cores de Texto */
   --text-main: #0f172a;
@@ -78,15 +78,15 @@
    Tema Escuro (Dark Mode)
    ========================================================================== */
 [data-theme='dark'] {
-  --bg-main: #0b1320;
-  --bg-sidebar: #06101d;
-  --bg-sidebar-hover: #0d1e33;
-  --bg-card: #132238;
-  --bg-card-subtle: #182b47;
-  --bg-hover: #1c3252;
-  --bg-active: #223c61;
-  --border-color: #233b5d;
-  --border-subtle: #1a2f4c;
+  --bg-main: #06170e;
+  --bg-sidebar: #04120b;
+  --bg-sidebar-hover: #082415;
+  --bg-card: #0b2115;
+  --bg-card-subtle: #0f2c1c;
+  --bg-hover: #133924;
+  --bg-active: #18472d;
+  --border-color: #1a4d31;
+  --border-subtle: #123823;
 
   --text-main: #f8fafc;
   --text-muted: #94a3b8;
@@ -190,12 +190,12 @@ a {
 .brand-mark {
   font-size: 20px;
   font-weight: 800;
-  background: linear-gradient(135deg, var(--pje-blue) 0%, #0284c7 100%);
+  background: linear-gradient(135deg, var(--pje-blue) 0%, var(--pje-cyan) 100%);
   color: #fff;
   padding: 4px 10px;
   border-radius: 8px;
   line-height: 1.1;
-  box-shadow: 0 2px 6px rgba(0, 120, 170, 0.4);
+  box-shadow: 0 2px 6px rgba(0, 122, 61, 0.4);
   letter-spacing: -0.5px;
 }
 
@@ -263,10 +263,10 @@ a {
 }
 
 .nav-item.ativo {
-  background: linear-gradient(90deg, var(--pje-blue) 0%, #0369a1 100%);
+  background: linear-gradient(90deg, var(--pje-blue) 0%, var(--pje-cyan) 100%);
   color: #ffffff;
   font-weight: 600;
-  box-shadow: 0 4px 12px rgba(0, 120, 170, 0.35);
+  box-shadow: 0 4px 12px rgba(0, 122, 61, 0.35);
 }
 
 .nav-badge {

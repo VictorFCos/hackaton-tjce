@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Relatório do Agente de Testes · PJe+ TJCE</title>
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --primary: #007A3D; /* Verde Institucional TJCE */
+      --primary-dark: #08331d;
+      --primary-light: #e8f5ec;
+      --success: #15803d;
+      --warning: #b45309;
+      --danger: #b91c1c;
+      --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--font); background: var(--bg); color: var(--text); line-height: 1.5; padding: 32px 20px; }
+    .container { max-width: 1140px; margin: 0 auto; }
+    header.report-head { margin-bottom: 28px; border-bottom: 2px solid var(--border); padding-bottom: 20px; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 16px; }
+    .head-title h1 { font-size: 26px; color: var(--primary); display: flex; align-items: center; gap: 10px; }
+    .head-title p { color: var(--text-muted); font-size: 14px; margin-top: 4px; }
+    .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-bottom: 32px; }
+    .kpi-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 18px 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+    .kpi-card small { font-size: 12px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+    .kpi-card .val { font-size: 30px; font-weight: 700; color: var(--primary); margin-top: 4px; }
+    .kpi-card.pass .val { color: var(--success); }
+    .kpi-card.fail .val { color: var(--danger); }
+    .kpi-card.warn .val { color: var(--warning); }
+
+    .video-section { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 22px; margin-bottom: 28px; box-shadow: 0 1px 4px rgba(0,0,0,0.04); }
+    .video-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 12px; }
+    .video-title { display: flex; align-items: center; gap: 12px; }
+    .video-icon { font-size: 26px; }
+    .video-title h3 { font-size: 17px; font-weight: 700; color: var(--primary-dark); }
+    .video-title p { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
+    .btn-video-dl { background: var(--primary-light); color: var(--primary); text-decoration: none; font-size: 13px; font-weight: 700; padding: 8px 16px; border-radius: 6px; border: 1px solid #c2e2cc; transition: all 0.2s; }
+    .btn-video-dl:hover { background: var(--primary); color: #fff; }
+    .video-player-wrap { background: #000; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); }
+    .video-player { width: 100%; max-height: 540px; display: block; }
+
+    .steps-list { display: flex; flex-direction: column; gap: 20px; }
+    .step-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 22px; box-shadow: 0 1px 4px rgba(0,0,0,0.04); transition: transform 0.15s ease; }
+    .step-card.pass { border-left: 5px solid var(--success); }
+    .step-card.fail { border-left: 5px solid var(--danger); }
+    .step-card.warn { border-left: 5px solid var(--warning); }
+    .step-header { display: flex; flex-direction: column; gap: 6px; margin-bottom: 10px; }
+    .step-meta { display: flex; align-items: center; gap: 10px; font-size: 12px; }
+    .step-badge { font-weight: 700; padding: 2px 8px; border-radius: 4px; font-size: 11px; text-transform: uppercase; }
+    .step-badge.pass { background: #dcfce7; color: var(--success); }
+    .step-badge.fail { background: #fee2e2; color: var(--danger); }
+    .step-badge.warn { background: #fef3c7; color: var(--warning); }
+    .step-num { font-weight: 600; color: var(--text-muted); }
+    .step-time { color: var(--text-muted); }
+    .step-title { font-size: 18px; font-weight: 600; color: var(--text); }
+    .step-desc { font-size: 14px; color: #334155; margin-bottom: 14px; background: #f1f5f9; padding: 10px 14px; border-radius: 6px; }
+    .screenshot-box { margin-top: 12px; }
+    .ss-title { font-size: 12px; font-weight: 600; color: var(--text-muted); margin-bottom: 6px; }
+    .screenshot-box img { width: 100%; max-height: 540px; object-fit: contain; background: #0f172a; border-radius: 8px; border: 1px solid var(--border); transition: opacity 0.2s; }
+    .screenshot-box img:hover { opacity: 0.95; }
+    footer { text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 13px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="report-head">
+      <div class="head-title">
+        <h1>🏛️ PJe+ TJCE — Relatório de Teste do Agente de Navegação</h1>
+        <p>Validação funcional automatizada com controle, inspeção visual e gravação de vídeo</p>
+      </div>
+      <div>
+        <span style="font-size: 13px; color: var(--text-muted); font-weight: 600;">Data: 12/10/2026 16:08:23</span>
+      </div>
+    </header>
+
+    <div class="kpis">
+      <div class="kpi-card pass">
+        <small>Testes Aprovados</small>
+        <div class="val">10 / 10</div>
+      </div>
+      <div class="kpi-card pass">
+        <small>Falhas Críticas</small>
+        <div class="val">0</div>
+      </div>
+      <div class="kpi-card warn">
+        <small>Avisos / Atenção</small>
+        <div class="val">0</div>
+      </div>
+      <div class="kpi-card">
+        <small>Tempo Total</small>
+        <div class="val">116.2s</div>
+      </div>
+    </div>
+
+    
+    <section class="video-section">
+      <div class="video-head">
+        <div class="video-title">
+          <span class="video-icon">🎥</span>
+          <div>
+            <h3>Gravação Contínua em Vídeo da Auditoria pelo Agente</h3>
+            <p>Registro audiovisual em alta resolução de todas as ações e validações no navegador</p>
+          </div>
+        </div>
+        <a href="videos/auditoria_pje_plus.webm" download="auditoria_pje_plus.webm" class="btn-video-dl">
+          ⬇️ Baixar Gravação (.webm)
+        </a>
+      </div>
+      <div class="video-player-wrap">
+        <video controls autoplay muted playsinline class="video-player">
+          <source src="videos/auditoria_pje_plus.webm" type="video/webm">
+          Seu navegador não suporta reprodução direta do arquivo WebM.
+        </video>
+      </div>
+    </section>
+
+
+    <section class="steps-list">
+      
+      <div class="step-card pass">
+        <div class="step-header">
+          <div class="step-meta">
+            <span class="step-badge pass">PASS</span>
+            <span class="step-num">Passo 1</span>
+            <span class="step-time">16:06:32</span>
+          </div>
+          <h3 class="step-title">Painel Geral e KPIs Executivos</h3>
+        </div>
+        <p class="step-desc">Painel carregado com sucesso. Saudação: "Boa tarde, Paula.", Kicker: "Vara de Conflitos Fundiários e Desapropriações da Comarca de Fortaleza · segunda-feira, 12 de outubro de 2026", Acervo ativo: 19 processos, Gráfico de movimentação e 4 KPIs ativos.</p>
+        
+          <div class="screenshot-box">
+            <div class="ss-title">📸 Painel Geral e Indicadores de Desempenho</div>
+            <a href="screenshots/01_painel_geral.png" target="_blank">
+              <img src="screenshots/01_painel_geral.png" alt="Painel Geral e KPIs Executivos" loading="lazy" />
+            </a>
+          </div>
+        
+      </div>
+    
+
+      <div class="step-card pass">
+        <div class="step-header">
+          <div class="step-meta">
+            <span class="step-badge pass">PASS</span>
+            <span class="step-num">Passo 2</span>
+            <span class="step-time">16:06:36</span>
+          </div>
+          <h3 class="step-title">Triagem & Auditoria Cadastral (Destaque Amarelo)</h3>
+        </div>
+        <p class="step-desc">Filtros validados. Regulares: 9 Regulares, Com divergência: 14 Com Inconsistência. Encontradas 42 linhas com realce amarelo de advertência conforme TPU/CNJ.</p>
+        
+          <div class="screenshot-box">
+            <div class="ss-title">📸 Triagem de Petições com Destaque em Amarelo</div>
+            <a href="screenshots/02_triagem_validacao.png" target="_blank">
+              <img src="screenshots/02_triagem_validacao.png" alt="Triagem & Auditoria Cadastral (Destaque Amarelo)" loading="lazy" />
+            </a>
+          </div>
+        
+      </div>
+    
+
+      <div class="step-card pass">
+        <div class="step-header">
+          <div class="step-meta">
+            <span class="step-badge pass">PASS</span>
+            <span class="step-num">Passo 3</span>
+            <span class="step-time">16:06:38</span>
+          </div>
+          <h3 class="step-title">Gaveta Lateral de Processo (ProcessDrawer)</h3>
+        </div>
+        <p class="step-desc">Gaveta aberta para o processo 0333447-50.2026.8.06.0001. Classe: Procedimento Comum Cível. Caixa de advertência e checklist: Visível com inconsistências apontadas.</p>
+        
+          <div class="screenshot-box">
+            <div class="ss-title">📸 Gaveta Lateral com Raio-X das Inconsistências</div>
+            <a href="screenshots/03_process_drawer_auditoria.png" target="_blank">
+              <img src="screenshots/03_process_drawer_auditoria.png" alt="Gaveta Lateral de Processo (ProcessDrawer)" loading="lazy" />
+            </a>
+          </div>
+        
+      </div>
+    
+
+      <div class="step-card pass">
+        <div class="step-header">
+          <div class="step-meta">
+            <span class="step-badge pass">PASS</span>
+            <span class="step-num">Passo 4</span>
+            <span class="step-time">16:06:40</span>
+          </div>
+          <h3 class="step-title">Intimação para Emenda da Inicial (art. 321 CPC)</h3>
+        </div>
+        <p class="step-desc">Intimação disparada com sucesso. Notificação gerada: "Intimação para emenda expedidaAdvogado notificado via DJe (art. 321 do CPC).".</p>
+        
+          <div class="screenshot-box">
+            <div class="ss-title">📸 Expedição de Intimação via Diário/Domicílio Eletrônico</div>
+            <a href="screenshots/04_intimacao_emenda.png" target="_blank">
+              <img src="screenshots/04_intimacao_emenda.png" alt="Intimação para Emenda da Inicial (art. 321 CPC)" loading="lazy" />
+            </a>
+          </div>
+        
+      </div>
+    
+
+      <div class="step-card pass">
+        <div class="step-header">
+          <div class="step-meta">
+            <span class="step-badge pass">PASS</span>
+            <span class="step-num">Passo 5</span>
+            <span class="step-time">16:06:42</span>
+          </div>
+          <h3 class="step-title">Geração de Minuta com Inteligência Artificial</h3>
+        </div>
+        <p class="step-desc">Minuta jurídica preliminar gerada pelo backend com estrutura processual formal (LGPD ativa). Extensão: 1081 caracteres.</p>
+        
+          <div class="screenshot-box">
+            <div class="ss-title">📸 Minuta Preliminar Jurídica Anonimizada (LGPD)</div>
+            <a href="screenshots/05_minuta_ia_gerada.png" target="_blank">
+              <img src="screenshots/05_minuta_ia_gerada.png" alt="Geração de Minuta com Inteligência Artificial" loading="lazy" />
+            </a>
+          </div>
+        
+      </div>
+    
+
+      <div class="step-card pass">
+        <div class="step-header">
+          <div class="step-meta">
+            <span class="step-badge pass">PASS</span>
+            <span class="step-num">Passo 6</span>
+            <span class="step-time">16:06:45</span>
+          </div>
+          <h3 class="step-title">Monitor de Urgências e Prazos Regimentais (SLA 24h/48h)</h3>
+        </div>
+        <p class="step-desc">Prazos regimentais monitorados. Cards de urgência: 3, Contadores ativos: 0. Disparo de alerta Teams simulado: Sucesso.</p>
+        
+          <div class="screenshot-box">
+            <div class="ss-title">📸 Monitoramento Ativo de SLA com Cronômetros Regressivos</div>
+            <a href="screenshots/06_monitor_urgencias_sla.png" target="_blank">
+              <img src="screenshots/06_monitor_urgencias_sla.png" alt="Monitor de Urgências e Prazos Regimentais (SLA 24h/48h)" loading="lazy" />
+            </a>
+          </div>
+        
+      </div>
+    
+
+      <div class="step-card pass">
+        <div class="step-header">
+          <div class="step-meta">
+            <span class="step-badge pass">PASS</span>
+            <span class="step-num">Passo 7</span>
+            <span class="step-time">16:06:50</span>
+          </div>
+          <h3 class="step-title">Fila de Trabalho e Distribuição Par/Ímpar</h3>
+        </div>
+        <p class="step-desc">Distribuição balanceada por dígito final CNJ validada. Alternância entre Kanban (4 fases), Split Par/Ímpar e Tabela executada com sucesso.</p>
+        
+          <div class="screenshot-box">
+            <div class="ss-title">📸 Fila de Trabalho Automatizada Par/Ímpar</div>
+            <a href="screenshots/07_fila_par_impar_kanban.png" target="_blank">
+              <img src="screenshots/07_fila_par_impar_kanban.png" alt="Fila de Trabalho e Distribuição Par/Ímpar" loading="lazy" />
+            </a>
+          </div>
+        
+      </div>
+    
+
+      <div class="step-card pass">
+        <div class="step-header">
+          <div class="step-meta">
+            <span class="step-badge pass">PASS</span>
+            <span class="step-num">Passo 8</span>
+            <span class="step-time">16:06:53</span>
+          </div>
+          <h3 class="step-title">Dossiê Unificado de Partes e Prevenção Processual (arts. 55 e 286 CPC)</h3>
+        </div>
+        <p class="step-desc">Dossiê consultado para "Maria das Graças Oliveira Souza". 0 cartões métricos de litigância exibidos. Prevenção processual por conexão: Auditada.</p>
+        
+          <div class="screenshot-box">
+            <div class="ss-title">📸 Dossiê Dona Maria com Detecção de Prevenção e Litispendência</div>
+            <a href="screenshots/08_dossie_unificado_prevencao.png" target="_blank">
+              <img src="screenshots/08_dossie_unificado_prevencao.png" alt="Dossiê Unificado de Partes e Prevenção Processual (arts. 55 e 286 CPC)" loading="lazy" />
+            </a>
+          </div>
+        
+      </div>
+    
+
+      <div class="step-card pass">
+        <div class="step-header">
+          <div class="step-meta">
+            <span class="step-badge pass">PASS</span>
+            <span class="step-num">Passo 9</span>
+            <span class="step-time">16:07:00</span>
+          </div>
+          <h3 class="step-title">Captura e Ingestão de Processos via MNI</h3>
+        </div>
+        <p class="step-desc">Pipeline completo de ingestão executado: validação dos 5 requisitos, cálculo de SLA e distribuição imediata.</p>
+        
+          <div class="screenshot-box">
+            <div class="ss-title">📸 Ingestão e Validação Automatizada de Processos do PJe</div>
+            <a href="screenshots/09_ingestao_processos_mni.png" target="_blank">
+              <img src="screenshots/09_ingestao_processos_mni.png" alt="Captura e Ingestão de Processos via MNI" loading="lazy" />
+            </a>
+          </div>
+        
+      </div>
+    
+
+      <div class="step-card pass">
+        <div class="step-header">
+          <div class="step-meta">
+            <span class="step-badge pass">PASS</span>
+            <span class="step-num">Passo 10</span>
+            <span class="step-time">16:07:04</span>
+          </div>
+          <h3 class="step-title">Acessibilidade, Tema Escuro e Notificações</h3>
+        </div>
+        <p class="step-desc">Alternância de temas (Dark/Light Mode) e painel suspenso de notificações testados com sucesso.</p>
+        
+          <div class="screenshot-box">
+            <div class="ss-title">📸 Central de Notificações e Prazos do Sistema</div>
+            <a href="screenshots/10_painel_notificacoes.png" target="_blank">
+              <img src="screenshots/10_painel_notificacoes.png" alt="Acessibilidade, Tema Escuro e Notificações" loading="lazy" />
+            </a>
+          </div>
+        
+      </div>
+    
+    </section>
+
+    <footer>
+      Agente de Testes Autônomo · Playwright & Antigravity · Tribunal de Justiça do Estado do Ceará
+    </footer>
+  </div>
+</body>
+</html>

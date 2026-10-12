@@ -2,11 +2,11 @@
 import { gerarCpf, gerarCnpj, cnjDV } from './validators';
 import { TPU } from './rules';
 
-export const VARA = 'Vara Única da Comarca de Aracati';
-export const COMARCA = 'Aracati/CE';
+export const VARA = 'Vara de Conflitos Fundiários e Desapropriações da Comarca de Fortaleza';
+export const COMARCA = 'Fortaleza/CE';
 const J = '8';
 const TR = '06';
-const ORIG = '0035';
+const ORIG = '0001';
 
 function mulberry32(seed) {
   let a = seed >>> 0;
@@ -23,15 +23,15 @@ const pick = (arr) => arr[Math.floor(R() * arr.length)];
 const digits = (n) => Array.from({ length: n }, () => Math.floor(R() * 10)).join('');
 const cpf = () => gerarCpf(digits(9));
 const cnpj = () => gerarCnpj(digits(8) + '0001');
-const cepCE = () => `62${String(800 + Math.floor(R() * 99)).padStart(3, '0')}-${digits(3)}`;
+const cepCE = () => `60${String(100 + Math.floor(R() * 800)).padStart(3, '0')}-${digits(3)}`;
 const clone = (x) => JSON.parse(JSON.stringify(x));
 
 // ——— Analistas ———
 export const ANALISTAS = [
-  { id: 'a1', nome: 'Ana Beatriz Lima', cargo: 'Analista Judiciária', equipe: 'par', ativo: true, cor: '#0078AA', email: 'ana.lima@tjce.jus.br' },
-  { id: 'a2', nome: 'Carlos Eduardo Rocha', cargo: 'Analista Judiciário', equipe: 'par', ativo: true, cor: '#7c5cff', email: 'carlos.rocha@tjce.jus.br' },
-  { id: 'a3', nome: 'Juliana Freitas', cargo: 'Analista Judiciária', equipe: 'impar', ativo: true, cor: '#e0699a', email: 'juliana.freitas@tjce.jus.br' },
-  { id: 'a4', nome: 'Rafael Monteiro', cargo: 'Técnico Judiciário', equipe: 'impar', ativo: true, cor: '#bc9029', email: 'rafael.monteiro@tjce.jus.br' },
+  { id: 'a1', nome: 'Ana Beatriz Lima', cargo: 'Analista Judiciária', equipe: 'par', ativo: true, cor: '#007A3D', email: 'ana.lima@tjce.jus.br' },
+  { id: 'a2', nome: 'Carlos Eduardo Rocha', cargo: 'Analista Judiciário', equipe: 'par', ativo: true, cor: '#059669', email: 'carlos.rocha@tjce.jus.br' },
+  { id: 'a3', nome: 'Juliana Freitas', cargo: 'Analista Judiciária', equipe: 'impar', ativo: true, cor: '#10b981', email: 'juliana.freitas@tjce.jus.br' },
+  { id: 'a4', nome: 'Rafael Monteiro', cargo: 'Técnico Judiciário', equipe: 'impar', ativo: true, cor: '#15803d', email: 'rafael.monteiro@tjce.jus.br' },
 ];
 
 export const USUARIO = { nome: 'Paula Mendes', cargo: 'Diretora de Secretaria' };
@@ -46,15 +46,17 @@ const ADVS = [
   { nome: 'Dr. Augusto Pinheiro', oab: 'OAB/PE 21.554' },
 ];
 
-const DONA_MARIA = { nome: 'Maria das Graças Oliveira Souza', tipo: 'PF', doc: gerarCpf('123456789'), dataNascimento: '1951-03-14', cep: '62800-000' };
-const JOSE = { nome: 'José Ferreira Lima', tipo: 'PF', doc: gerarCpf('987654321'), dataNascimento: '1998-07-22', cep: '62800-310' };
+const DONA_MARIA = { nome: 'Maria das Graças Oliveira Souza', tipo: 'PF', doc: gerarCpf('123456789'), dataNascimento: '1951-03-14', cep: '60160-230' };
+const JOSE = { nome: 'José Ferreira Lima', tipo: 'PF', doc: gerarCpf('987654321'), dataNascimento: '1998-07-22', cep: '60175-100' };
 const BANCO_H = { nome: 'Banco Horizonte S.A.', tipo: 'PJ', doc: gerarCnpj('112223330001'), cep: '01310-100' };
 const BANCO_S = { nome: 'Banco Sertão Crédito S.A.', tipo: 'PJ', doc: gerarCnpj('445556660001'), cep: '60165-121' };
 const ENERGIA = { nome: 'Companhia Energética do Vale S.A.', tipo: 'PJ', doc: gerarCnpj('778889990001'), cep: '60150-160' };
 const SAUDE = { nome: 'Operadora Saúde Mais Ltda.', tipo: 'PJ', doc: gerarCnpj('223334440001'), cep: '60115-170' };
 const MP = { nome: 'Ministério Público do Estado do Ceará', tipo: 'PJ', doc: gerarCnpj('066227400001'), cep: '60811-341' };
 const ESTADO = { nome: 'Estado do Ceará', tipo: 'PJ', doc: gerarCnpj('072656770001'), cep: '60170-900' };
-const RIBEIRO = { nome: 'Comercial Ribeiro Ltda.', tipo: 'PJ', doc: gerarCnpj('334445550001'), cep: '62800-120' };
+const MUNICIPIO = { nome: 'Município de Fortaleza', tipo: 'PJ', doc: gerarCnpj('079546230001'), cep: '60060-390' };
+const SOP = { nome: 'Superintendência de Obras Públicas - SOP/CE', tipo: 'PJ', doc: gerarCnpj('337810550001'), cep: '60822-325' };
+const RIBEIRO = { nome: 'Comercial Ribeiro Ltda.', tipo: 'PJ', doc: gerarCnpj('334445550001'), cep: '60010-020' };
 
 const pf = (nome, extra = {}) => ({ nome, tipo: 'PF', doc: cpf(), cep: cepCE(), ...extra });
 const pj = (nome, extra = {}) => ({ nome, tipo: 'PJ', doc: cnpj(), cep: cepCE(), ...extra });
@@ -104,7 +106,7 @@ function processo(spec, now) {
     poloAtivo: clone(spec.ativo),
     poloPassivo: clone(spec.passivo),
     reuPreso: !!spec.reuPreso,
-    estabelecimentoPrisional: spec.reuPreso ? spec.estabelecimento ?? 'Cadeia Pública de Aracati' : null,
+    estabelecimentoPrisional: spec.reuPreso ? spec.estabelecimento ?? 'Unidade Prisional de Triagem de Fortaleza (CPPL)' : null,
     tutelaUrgencia: !!spec.tutela,
     resumo: spec.resumo,
     autuadoEm,
@@ -124,9 +126,9 @@ function processo(spec, now) {
 function specsFila() {
   return [
     {
-      classe: 'Auto de Prisão em Flagrante', assunto: 'Roubo', reuPreso: true, horasAtras: 21, status: 'analise', statusHorasAtras: 4,
+      classe: 'Auto de Prisão em Flagrante', assunto: 'Esbulho Possessório Qualificado', reuPreso: true, horasAtras: 21, status: 'analise', statusHorasAtras: 4,
       ativo: [MP], passivo: [pf('Francisco Alves Pereira', { dataNascimento: '2001-02-11' })],
-      resumo: 'Comunicação de prisão em flagrante de Francisco Alves Pereira pela suposta prática de roubo majorado (art. 157, §2º, II, do CP) contra estabelecimento comercial no centro de Aracati. Autoridade policial representa pela conversão em preventiva; defesa alega primariedade e residência fixa.',
+      resumo: 'Comunicação de prisão em flagrante de Francisco Alves Pereira pela suposta prática de esbulho possessório e dano ao patrimônio público em terreno do Estado no bairro Messejana em Fortaleza. Autoridade policial representa pela preventiva.',
     },
     {
       classe: 'Pedido de Liberdade Provisória', assunto: 'Liberdade Provisória', reuPreso: true, horasAtras: 9, status: 'triagem', erros: ['prisional'],
@@ -184,9 +186,9 @@ function specsFila() {
       resumo: 'Execução de três cheques devolvidos por insuficiência de fundos, emitidos para pagamento de material de construção.',
     },
     {
-      classe: 'Alimentos - Lei Especial Nº 5.478/68', assunto: 'Fixação', tutela: true, horasAtras: 30, status: 'triagem', valorCausa: 7920,
-      ativo: [comAdv(pf('Larissa Fernandes Lima (rep. por sua genitora)', { dataNascimento: '2018-10-01' }), ADVS[4])], passivo: [pf('Diego Fernandes Lima', { dataNascimento: '1991-07-14' })],
-      resumo: 'Ação de alimentos em favor de menor de 8 anos. Pede fixação de alimentos provisórios em 30% do salário mínimo.',
+      classe: 'Reintegração / Manutenção de Posse', assunto: 'Esbulho / Turbação / Ameaça', tutela: true, horasAtras: 30, status: 'triagem', valorCausa: 150000,
+      ativo: [comAdv(pj('Município de Fortaleza'), ADVS[4])], passivo: [pf('Associação dos Ocupantes da Gleba Mucuripe')],
+      resumo: 'Ação de reintegração de posse de terreno público municipal destinado a equipamento de drenagem urbana e saúde. Pede liminar de desocupação.',
     },
     {
       classe: 'Procedimento Comum Cível', assunto: 'Usucapião Extraordinária', horasAtras: 3, status: 'triagem', valorCausa: 90000, erros: ['assunto'],
@@ -230,9 +232,9 @@ function specsFila() {
       resumo: 'Prisão em flagrante por descumprimento de medida protetiva. Audiência de custódia realizada.',
     },
     {
-      classe: 'Alimentos - Lei Especial Nº 5.478/68', assunto: 'Revisão', horasAtras: 120, status: 'concluido', concluidoHorasAtras: 30, valorCausa: 6000,
-      ativo: [comAdv(pf('Fábio Henrique Sales', { dataNascimento: '1983-08-08' }))], passivo: [pf('Mirela Sales (rep. por sua genitora)')],
-      resumo: 'Revisional de alimentos por redução da capacidade financeira do alimentante.',
+      classe: 'Desapropriação', assunto: 'Desapropriação por Utilidade Pública / Interesse Social', horasAtras: 120, status: 'concluido', concluidoHorasAtras: 30, valorCausa: 320000,
+      ativo: [comAdv(ESTADO)], passivo: [pf('Espólio de Raimundo Nonato Aguiar')],
+      resumo: 'Ação de desapropriação de faixa de terreno para implantação da Linha Leste do Metrô de Fortaleza (Metrofor). Acordo homologado em audiência.',
     },
     {
       classe: 'Procedimento Comum Cível', assunto: 'Contratos Bancários', horasAtras: 140, status: 'concluido', concluidoHorasAtras: 50, valorCausa: 41000,
@@ -268,7 +270,7 @@ function specsAcervo() {
 function specsLote() {
   return [
     {
-      classe: 'Auto de Prisão em Flagrante', assunto: 'Tráfico de Drogas e Condutas Afins', reuPreso: true, estabelecimento: 'Cadeia Pública de Aracati',
+      classe: 'Auto de Prisão em Flagrante', assunto: 'Tráfico de Drogas e Condutas Afins', reuPreso: true, estabelecimento: 'Unidade Prisional de Triagem de Fortaleza (CPPL)',
       ativo: [MP], passivo: [JOSE],
       resumo: 'Comunicação de prisão em flagrante de José Ferreira Lima, abordado com 48 porções de substância análoga a cocaína e R$ 1.230,00 em espécie. Autoridade policial representa pela preventiva, citando reiteração delitiva. Custodiado aguarda audiência de custódia.',
     },
@@ -283,13 +285,13 @@ function specsLote() {
       resumo: 'Atraso de 26 meses na entrega de unidade habitacional adquirida na planta. Pede lucros cessantes e danos morais.',
     },
     {
-      classe: 'Alimentos - Lei Especial Nº 5.478/68', assunto: 'Fixação', valorCausa: 6360,
-      ativo: [comAdv(pf('Davi Lucas Moura (rep. por sua genitora)', { dataNascimento: '2020-02-02' }), ADVS[4])], passivo: [pf('Thiago Moura Ribeiro', { dataNascimento: '1994-04-14' })],
-      resumo: 'Fixação de alimentos para criança de 6 anos; genitor trabalha como mototaxista sem vínculo formal.',
+      classe: 'Desapropriação', assunto: 'Imissão Provisória na Posse', valorCausa: 420000,
+      ativo: [comAdv(pj('Município de Fortaleza'), ADVS[4])], passivo: [pj('Imobiliária e Agropecuária Meireles S/A')],
+      resumo: 'Ação de desapropriação de terreno de 4.000m² para utilidade pública visando implantação de contenção de encosta e equipamento municipal no Bairro Papicu.',
     },
     {
       classe: 'Mandado de Segurança Cível', assunto: 'Concurso Público / Edital', tutela: true, valorCausa: 1000,
-      ativo: [comAdv(pf('Beatriz Nogueira Sampaio', { dataNascimento: '1997-12-01' }), ADVS[5])], passivo: [pj('Município de Aracati')],
+      ativo: [comAdv(pf('Beatriz Nogueira Sampaio', { dataNascimento: '1997-12-01' }), ADVS[5])], passivo: [pj('Município de Fortaleza')],
       resumo: 'Candidata eliminada de concurso municipal por suposta ausência de documento entregue tempestivamente. Pede liminar para participar da próxima etapa marcada para 5 dias.',
     },
     {
@@ -311,7 +313,7 @@ function specAleatoria() {
   const civis = Object.keys(TPU).filter((c) => !['Auto de Prisão em Flagrante', 'Pedido de Liberdade Provisória', 'Habeas Corpus Criminal', 'Ação Penal - Procedimento Ordinário'].includes(c));
   const preso = R() < 0.15;
   if (preso) {
-    return { classe: 'Auto de Prisão em Flagrante', assunto: pick(TPU['Auto de Prisão em Flagrante']), reuPreso: true, ativo: [MP], passivo: [pf(pick(NOMES), { dataNascimento: `199${Math.floor(R() * 9)}-05-10` })], resumo: 'Comunicação de prisão em flagrante encaminhada pela Delegacia Regional de Aracati. Pendente análise da conversão em preventiva.' };
+    return { classe: 'Auto de Prisão em Flagrante', assunto: pick(TPU['Auto de Prisão em Flagrante']), reuPreso: true, ativo: [MP], passivo: [pf(pick(NOMES), { dataNascimento: `199${Math.floor(R() * 9)}-05-10` })], resumo: 'Comunicação de prisão em flagrante encaminhada pelo 15º Distrito Policial de Fortaleza. Pendente análise da conversão em preventiva.' };
   }
   const classe = pick(civis);
   const idoso = R() < 0.2;

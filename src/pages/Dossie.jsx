@@ -109,7 +109,7 @@ export default function Dossie() {
                 <span>•</span>
                 <span>Registro Unificado no TJCE: <strong>{dossie.lista.length} feitos vinculados</strong></span>
                 <span>•</span>
-                <span>Comarca: <strong>Aracati / CE</strong></span>
+                <span>Comarca: <strong>Fortaleza / CE</strong></span>
               </div>
             </div>
           </div>

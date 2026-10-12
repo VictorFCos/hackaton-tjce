@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Columns3, List, Users, CheckCircle, ArrowRight, ArrowLeft, Shuffle, Sparkles, Filter, Split, GripVertical, Siren, AlertTriangle } from 'lucide-react';
 import { useStore, useNow } from '../lib/store';
-import { Avatar, estadoSla } from '../components/ui';
+import { Avatar, estadoSla, EquipeTag, NumeroProc, SlaBadge } from '../components/ui';
 import { STATUS, equipeDoNumero, ultimoDigito } from '../lib/rules';
 import { fmtDataHora, fmtMoeda, fmtRestante } from '../lib/format';
 

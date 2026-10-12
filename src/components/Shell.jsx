@@ -139,7 +139,7 @@ export function Topbar() {
         </div>
 
         <div className="user">
-          <Avatar nome={USUARIO.nome} cor="#093c75" size={32} />
+          <Avatar nome={USUARIO.nome} cor="#007A3D" size={32} />
           <div className="user-info">
             <strong>{USUARIO.nome}</strong>
             <small>{USUARIO.cargo}</small>

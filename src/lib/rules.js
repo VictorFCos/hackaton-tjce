@@ -1,16 +1,18 @@
 import { cnjValido, cpfValido, cnpjValido, oabValida, cepValido, idade, onlyDigits } from './validators';
 
-// Tabela Processual Unificada (recorte) — classe → assuntos compatíveis
+// Tabela Processual Unificada (recorte) — classe → assuntos compatíveis (Vara Fundiária / Desapropriações / Posse Pública)
 export const TPU = {
-  'Procedimento Comum Cível': ['Empréstimo consignado', 'Indenização por Dano Moral', 'Contratos Bancários', 'Fornecimento de Energia Elétrica', 'Planos de Saúde', 'Usucapião Extraordinária'],
-  'Reintegração / Manutenção de Posse': ['Esbulho / Turbação / Ameaça', 'Posse'],
-  'Execução de Título Extrajudicial': ['Cheque', 'Nota Promissória', 'Contratos Bancários'],
-  'Alimentos - Lei Especial Nº 5.478/68': ['Fixação', 'Revisão'],
-  'Mandado de Segurança Cível': ['Fornecimento de Medicamentos', 'Concurso Público / Edital'],
-  'Auto de Prisão em Flagrante': ['Furto', 'Roubo', 'Tráfico de Drogas e Condutas Afins', 'Violência Doméstica Contra a Mulher'],
+  'Reintegração / Manutenção de Posse': ['Esbulho / Turbação / Ameaça', 'Posse de Bem Público', 'Ocupação Irregular de Área Pública', 'Proteção Possessória'],
+  'Desapropriação': ['Desapropriação por Utilidade Pública', 'Desapropriação Indireta', 'Imissão Provisória na Posse'],
+  'Procedimento Comum Cível': ['Usucapião Extraordinária', 'Demarcação / Divisão de Terras', 'Regularização Fundiária Urbana (Reurb)', 'Indenização por Ocupação Indevida', 'Empréstimo consignado', 'Planos de Saúde'],
+  'Interdito Proibitório': ['Ameaça à Posse Pública', 'Área de Preservação Permanente'],
+  'Ação Demarcatória / Divisória': ['Fixação de Rumos e Limites', 'Terras Devolutas'],
+  'Embargos de Terceiro': ['Constrição Judicial em Imóvel', 'Posse de Terceiro'],
+  'Mandado de Segurança Cível': ['Ato de Imissão na Posse', 'Alvará de Construção / Obras Públicas', 'Concurso Público / Edital'],
+  'Auto de Prisão em Flagrante': ['Esbulho Possessório Qualificado', 'Dano ao Patrimônio Público', 'Crime Ambiental / Ocupação', 'Violência Doméstica Contra a Mulher', 'Roubo'],
   'Pedido de Liberdade Provisória': ['Prisão em flagrante', 'Liberdade Provisória'],
   'Habeas Corpus Criminal': ['Prisão Preventiva', 'Liberdade Provisória'],
-  'Ação Penal - Procedimento Ordinário': ['Furto', 'Roubo', 'Receptação'],
+  'Ação Penal - Procedimento Ordinário': ['Dano ao Patrimônio Público', 'Esbulho Possessório', 'Furto'],
 };
 
 export const CLASSES_CRIMINAIS = ['Auto de Prisão em Flagrante', 'Pedido de Liberdade Provisória', 'Habeas Corpus Criminal', 'Ação Penal - Procedimento Ordinário'];
